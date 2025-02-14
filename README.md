@@ -7,7 +7,7 @@ this is a database migration tool based on Gorm
 go get -u github.com/fanqie/dcmigrate
 ```
 ### Quickly Initialize Your Project
-[Guide Doc](doc/Initialize_Guide)
+[Guide Doc](doc/en/Initialize_Guide.md)
 
 
 ### Directory Structure
@@ -109,7 +109,7 @@ func mysqlDialector() gorm.Dialector {
 ### Generate
 #### Generate a createTable migration file
 ```shell
-> go run dmc.go gen --create users
+$ go run dmc.go gen --create users
 [Info]check dc_migrations table
 [Success]create dc_migrations
 [Success]ok!
@@ -117,71 +117,7 @@ func mysqlDialector() gorm.Dialector {
 [Success]ok! file name :[./dc_migrations/migration_v_2025_02_14_09_48_00_702_create_table_users.go]
 ```
 #### Edit the migration file
-open "./dc_migrations/migration_v_2025_02_14_09_48_00_702_create_table_users.go" file and edit it
-```golang
-package dc_migrations
-
-import (
-	migrate "github.com/fanqie/dcmigrate/pkg/core"
-	"gorm.io/gorm"
-)
-
-type MigrateV20250214094800702CreateTableUsers struct {
-	migrate.MigrateBasic
-	currentTable *StructV20250214094800702CreateTableUsers
-}
-
-func NewMigrateV20250214094800702CreateTableUsers() *MigrateV20250214094800702CreateTableUsers {
-	return &MigrateV20250214094800702CreateTableUsers{
-		currentTable:&StructV20250214094800702CreateTableUsers{},
-	}
-}
-func (r *MigrateV20250214094800702CreateTableUsers) Register() {
-	r.Tag = "v_2025_02_14_09_48_00_702_create_table_users"
-}
-// !!!BEGIN!!!
-// Here is the code that you are focusing on
-// You can add your code here
-
-// this is the struct that you want to create
-type StructV20250214094800702CreateTableUsers struct{
-	Id        int64 `gorm:"primaryKey;autoIncrement"`
-	CreatedAt int64 `gorm:"autoCreateTime"`
-	UpdatedAt int64 `gorm:"autoUpdateTime"`
-	DeletedAt int64 `gorm:"index"`
-}
-
-func (*StructV20250214094800702CreateTableUsers) TableName() string {
-	return "users" //Can be modified to your target table name
-}
-// Up is migration function
-func (r *MigrateV20250214094800702CreateTableUsers) Up(tx *gorm.DB) error{
-
-	err := tx.Migrator().CreateTable(r.currentTable)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-// Down is rollback function
-func (r *MigrateV20250214094800702CreateTableUsers) Down(tx *gorm.DB) error{
-	err := tx.Migrator().DropTable(r.currentTable)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-func (r *MigrateV20250214094800702CreateTableUsers) AfterUp(tx *gorm.DB) {
-	//run in after "Up function"
-}
-func (r *MigrateV20250214094800702CreateTableUsers) AfterDown(tx *gorm.DB) {
-	//run in after "Down function"
-}
-
-// ↑↑↑↑↑↑ Here is the code that you are focusing on 
-// !!!END!!!
-
-```
+[Guide Doc](doc/en/Edit_Migration.md)
 #### Generate a alterTable migration file
 ```shell
 $ go run dmc.go gen --alter users

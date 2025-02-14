@@ -42,9 +42,9 @@ chmod +x "./output/dmInit-linux-386-${version}"
 cd "./output/basic" || exit
 "../dmInit-linux-386-${version}"
 pwd
-zip -r dc_migrations_template.zip *
+zip -r ../dc_migrations_template.zip .
 cd ..
-rm -rf ./basic
+#rm -rf ./basic
 rm -rf "./dmInit-linux-386-${version}"
 echo "zip completed"
 
