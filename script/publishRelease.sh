@@ -166,9 +166,9 @@ echo "" >> "$OUTPUT_FILE"
 #
 echo "done：$OUTPUT_FILE"
 
-#git add .
-##git tag -d "${VERSION}"
-#git commit -m "release ${VERSION}"
-#git tag -a "${VERSION}" -m "release ${VERSION}"
-#git push origin "${VERSION}"
-#git push origin main
+git add .
+#git tag -d "${VERSION}"
+git commit -m "release ${VERSION}"
+git tag -a "${VERSION}" -m "release ${VERSION}"
+git push origin "${VERSION}"
+git push origin main

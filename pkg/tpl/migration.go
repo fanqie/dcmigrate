@@ -89,7 +89,8 @@ func (r *Migrate{{TypeTag}}) Register() {
 // ↓↓↓↓↓↓ Here is the code that you are focusing on
 
 type Struct{{TypeTag}} struct{
-	UserName        string ` + "`" + `gorm:"index"` + "`" + `
+	UserName        string ` + "`" + `gorm:"type:varchar(100);"` + "`" + `
+	NickName        string ` + "`" + `gorm:"type:varchar(100);"` + "`" + `
 }
 func (*Struct{{TypeTag}}) TableName() string {
 	return "{{TableName}}"
@@ -97,13 +98,22 @@ func (*Struct{{TypeTag}}) TableName() string {
 func (r *Migrate{{TypeTag}}) Up(tx *gorm.DB) error{
 	err := tx.Migrator().AddColumn(r.currentTable,"UserName")
 	if err != nil {
+			return err
+	}
+	err = tx.Migrator().AddColumn(r.currentTable,"NickName")
+	if err != nil {
 		return err
 	}
 	return nil
 }
 // Down is rollback function
 func (r *Migrate{{TypeTag}}) Down(tx *gorm.DB) error{
-	err := tx.Migrator().DropColumn(r.currentTable,"UserName")
+	err := tx.Migrator().DropColumn(r.currentTable, "UserName")
+	if err != nil {
+		return err
+	}
+
+	err = tx.Migrator().DropColumn(r.currentTable, "NickName")
 	if err != nil {
 		return err
 	}
