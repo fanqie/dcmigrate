@@ -9,7 +9,7 @@
 go get -u github.com/fanqie/dcmigrate
 ```
 ### 快速初始化迁移工具在你的项目
-[操作指南文档](doc/zh_cn/Initialize_Guide.md)
+[操作指南文档](Initialize_Guide.md)
 
 
 ### 目录结构
@@ -121,7 +121,7 @@ $ go run dmc.go gen --create users
 [Success]ok! file name :[./dc_migrations/migration_v_2025_02_14_09_48_00_702_create_table_users.go]
 ```
 #### 编辑迁移文件
-[操作指南文档](doc/zh_cn/Edit_Migration.md)
+[操作指南文档](Edit_Migration.md)
 #### 生成alterTable迁移文件
 ```shell
 $ go run dmc.go gen --alter users
