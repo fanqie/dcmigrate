@@ -110,6 +110,8 @@ func mysqlDialector() gorm.Dialector {
 #### Generate a createTable migration file
 ```shell
 $ go run dmc.go gen --create users
+```
+```shell
 [Info]check dc_migrations table
 [Success]create dc_migrations
 [Success]ok!
