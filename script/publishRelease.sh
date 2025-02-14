@@ -46,7 +46,7 @@ EOL
 
 echo "release.yml create success：$OUTPUT_FILE"
 # Markdown
-OUTPUT_FILE="doc/Initialize_Guide.md"
+OUTPUT_FILE="doc/en/Initialize_Guide.md"
 
 echo "# Quickly Initialize Your Project" > "$OUTPUT_FILE"
 
@@ -70,105 +70,57 @@ echo "## Successful " >> "$OUTPUT_FILE"
 echo "When you see the following directory structure, it means it has been successful" >> "$OUTPUT_FILE"
 echo '```shell' >> "$OUTPUT_FILE"
 echo "example/" >> "$OUTPUT_FILE"
-echo "├── dmc.go // This is the command-line tool for gormMigration" >> "$OUTPUT_FILE"
-echo "├── dc_migrations // This is the migration file directory for gormMigration" >> "$OUTPUT_FILE"
-echo "└── register.go // This is the migration file registration file for gormMigration, which is automatically generated and maintained by gormMigration. Please do not manually modify it" >> "$OUTPUT_FILE"
-echo "  └── 20230301_000000_create_users_table.go // This is the migration file for gormMigration" >> "$OUTPUT_FILE"
+echo "├── dmc.go // This is the command-line tool for dcmigration" >> "$OUTPUT_FILE"
+echo "├── dc_migrations // This is the migration file directory for dcmigration" >> "$OUTPUT_FILE"
+echo "└── register.go // This is the migration file registration file for dcmigration, which is automatically generated and maintained by dcmigration. Please do not manually modify it" >> "$OUTPUT_FILE"
+echo "  └── 20230301_000000_create_users_table.go // This is the migration file for dcmigration" >> "$OUTPUT_FILE"
 echo "├── go.mod" >> "$OUTPUT_FILE"
 echo "├── go.sum" >> "$OUTPUT_FILE"
 echo "└── ... you project files" >> "$OUTPUT_FILE"
 echo '```' >> "$OUTPUT_FILE"
 
-
 echo "" >> "$OUTPUT_FILE"
 
-#echo '# More quick initialization to your project' >> "$OUTPUT_FILE"
-#
-#echo "## Windows" >> "$OUTPUT_FILE"
-#echo "" >> "$OUTPUT_FILE"
-#
-#echo "### 64位 (amd64)" >> "$OUTPUT_FILE"
-#echo '```bash' >> "$OUTPUT_FILE"
-#echo "curl -o dmInit-windows-amd64-${VERSION}.exe https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dmInit-windows-amd64-${VERSION}.exe
-#.\dmInit-windows-amd64-${VERSION}.exe" >> "$OUTPUT_FILE"
-#echo '```' >> "$OUTPUT_FILE"
-#echo "" >> "$OUTPUT_FILE"
-#
-#echo "### 32位 (386)" >> "$OUTPUT_FILE"
-#echo '```bash' >> "$OUTPUT_FILE"
-#echo "curl -o dmInit-windows-386-${VERSION}.exe https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dmInit-windows-386-${VERSION}.exe
-#.\dmInit-windows-386-${VERSION}.exe" >> "$OUTPUT_FILE"
-#echo '```' >> "$OUTPUT_FILE"
-#echo "" >> "$OUTPUT_FILE"
-#
-#echo "### ARM" >> "$OUTPUT_FILE"
-#echo '```bash' >> "$OUTPUT_FILE"
-#echo "curl -o dmInit-windows-arm-${VERSION}.exe https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dmInit-windows-arm-${VERSION}.exe
-#.\dmInit-windows-arm-${VERSION}.exe" >> "$OUTPUT_FILE"
-#echo '```' >> "$OUTPUT_FILE"
-#echo "" >> "$OUTPUT_FILE"
-#
-#echo "### ARM64" >> "$OUTPUT_FILE"
-#echo '```bash' >> "$OUTPUT_FILE"
-#echo "curl -o dmInit-windows-arm64-${VERSION}.exe https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dmInit-windows-arm64-${VERSION}.exe
-# .\dmInit-windows-arm64-${VERSION}.exe
-#" >> "$OUTPUT_FILE"
-#echo '```' >> "$OUTPUT_FILE"
-#echo "" >> "$OUTPUT_FILE"
-#
-## Linux
-#echo "## Linux" >> "$OUTPUT_FILE"
-#echo "" >> "$OUTPUT_FILE"
-#
-#echo "### 64位 (amd64)" >> "$OUTPUT_FILE"
-#echo '```bash' >> "$OUTPUT_FILE"
-#echo "curl -L -o dmInit-linux-amd64-${VERSION} https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dmInit-linux-amd64-${VERSION}
-#chmod +x dmInit-linux-amd64-${VERSION}
-#./dmInit-linux-amd64-${VERSION}" >> "$OUTPUT_FILE"
-#echo '```' >> "$OUTPUT_FILE"
-#echo "" >> "$OUTPUT_FILE"
-#
-#echo "### ARM" >> "$OUTPUT_FILE"
-#echo '```bash' >> "$OUTPUT_FILE"
-#echo "curl -L -o dmInit-linux-arm-${VERSION} https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dmInit-linux-arm-${VERSION}
-#chmod +x dmInit-linux-arm-${VERSION}
-#./dmInit-linux-arm-${VERSION}" >> "$OUTPUT_FILE"
-#echo '```' >> "$OUTPUT_FILE"
-#echo "" >> "$OUTPUT_FILE"
-#
-#echo "### ARM64" >> "$OUTPUT_FILE"
-#echo '```bash' >> "$OUTPUT_FILE"
-#echo "curl -L -o dmInit-linux-arm64-${VERSION} https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dmInit-linux-arm64-${VERSION}
-#chmod +x dmInit-linux-arm64-${VERSION}
-#./dmInit-linux-arm64-${VERSION}" >> "$OUTPUT_FILE"
-#echo '```' >> "$OUTPUT_FILE"
-#echo "" >> "$OUTPUT_FILE"
-#
-## macOS
-#echo "## macOS" >> "$OUTPUT_FILE"
-#echo "" >> "$OUTPUT_FILE"
-#
-#echo "### 64位 (amd64)" >> "$OUTPUT_FILE"
-#echo '```bash' >> "$OUTPUT_FILE"
-#echo "curl -L -o dmInit-darwin-amd64-${VERSION} https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dmInit-darwin-amd64-${VERSION}
-#chmod +x dmInit-darwin-amd64-${VERSION}
-#./dmInit-darwin-amd64-${VERSION}" >> "$OUTPUT_FILE"
-#echo '```' >> "$OUTPUT_FILE"
-#echo "" >> "$OUTPUT_FILE"
-#
-#echo "### ARM64" >> "$OUTPUT_FILE"
-#echo '```bash' >> "$OUTPUT_FILE"
-#echo "curl -L -o dmInit-darwin-arm64-${VERSION} https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dmInit-darwin-arm64-${VERSION}
-#chmod +x dmInit-darwin-arm64-${VERSION}
-#./dmInit-darwin-arm64-${VERSION}" >> "$OUTPUT_FILE"
-#echo '```' >> "$OUTPUT_FILE"
-#echo "" >> "$OUTPUT_FILE"
-#
-echo "done：$OUTPUT_FILE"
+OUTPUT_FILE_CN="doc/zh_cn/Initialize_Guide.md"
+echo "# Quickly Initialize Your Project" > "$OUTPUT_FILE_CN"
+echo "# 快速初始化您的项目" > "$OUTPUT_FILE_CN"
 
-git add .
-#git tag -d "${VERSION}"
-git commit -m "release ${VERSION}"
-git tag -a "${VERSION}" -m "release ${VERSION}"
-git push origin "${VERSION}"
-git push origin main
+echo "## 推荐方法" >> "$OUTPUT_FILE_CN"
+echo "### Wget" >> "$OUTPUT_FILE_CN"
+echo '```bash' >> "$OUTPUT_FILE_CN"
+echo "wget https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dc_migrations_template.zip -O dc_migrations_template.zip && unzip dc_migrations_template.zip" >> "$OUTPUT_FILE_CN"
+echo '```' >> "$OUTPUT_FILE_CN"
+
+echo "### CURL" >> "$OUTPUT_FILE_CN"
+echo '```bash' >> "$OUTPUT_FILE_CN"
+echo "curl https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dc_migrations_template.zip -o dc_migrations_template.zip && unzip dc_migrations_template.zip" >> "$OUTPUT_FILE_CN"
+echo '' >> "$OUTPUT_FILE_CN"
+echo '```' >> "$OUTPUT_FILE_CN"
+
+echo "### 手动模式" >> "$OUTPUT_FILE_CN"
+echo "**您可以手动下载并将其解压到项目的根目录**" >> "$OUTPUT_FILE_CN"
+echo "[下载模板压缩包](https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dc_migrations_template.zip)" >> "$OUTPUT_FILE_CN"
+
+echo "## 成功" >> "$OUTPUT_FILE_CN"
+echo "当您看到以下目录结构时，说明已成功" >> "$OUTPUT_FILE_CN"
+echo '```shell' >> "$OUTPUT_FILE_CN"
+echo "example/" >> "$OUTPUT_FILE_CN"
+echo "├── dmc.go // 这是用于 dcmigration 的命令行工具" >> "$OUTPUT_FILE_CN"
+echo "├── dc_migrations // 这是 dcmigration 的迁移文件目录" >> "$OUTPUT_FILE_CN"
+echo "└── register.go // 这是 dcmigration 的迁移文件注册文件，由 dcmigration 自动生成和维护。请勿手动修改" >> "$OUTPUT_FILE_CN"
+echo "  └── 20230301_000000_create_users_table.go // 这是 dcmigration 的迁移文件" >> "$OUTPUT_FILE_CN"
+echo "├── go.mod" >> "$OUTPUT_FILE_CN"
+echo "├── go.sum" >> "$OUTPUT_FILE_CN"
+echo "└── ... 您的项目文件" >> "$OUTPUT_FILE_CN"
+echo '```' >> "$OUTPUT_FILE_CN"
+
+echo "" >> "$OUTPUT_FILE_CN"
+
+echo "done：$OUTPUT_FILE_CN"
+
+#git add .
+##git tag -d "${VERSION}"
+#git commit -m "release ${VERSION}"
+#git tag -a "${VERSION}" -m "release ${VERSION}"
+#git push origin "${VERSION}"
+#git push origin main

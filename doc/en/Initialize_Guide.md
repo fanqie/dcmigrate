@@ -16,10 +16,10 @@ curl  https://github.com/fanqie/dcmigrate/releases/download/v0.1.0-alpha/dc_migr
 When you see the following directory structure, it means it has been successful
 ```shell
 example/
-├── dmc.go // This is the command-line tool for gormMigration
-├── dc_migrations // This is the migration file directory for gormMigration
-└── register.go // This is the migration file registration file for gormMigration, which is automatically generated and maintained by gormMigration. Please do not manually modify it
-  └── 20230301_000000_create_users_table.go // This is the migration file for gormMigration
+├── dmc.go // This is the command-line tool for dcmigration
+├── dc_migrations // This is the migration file directory for dcmigration
+└── register.go // This is the migration file registration file for dcmigration, which is automatically generated and maintained by dcmigration. Please do not manually modify it
+  └── 20230301_000000_create_users_table.go // This is the migration file for dcmigration
 ├── go.mod
 ├── go.sum
 └── ... you project files

@@ -44,7 +44,7 @@ cd "./output/basic" || exit
 pwd
 zip -r ../dc_migrations_template.zip .
 cd ..
-#rm -rf ./basic
+rm -rf ./basic
 rm -rf "./dmInit-linux-386-${version}"
 echo "zip completed"
 

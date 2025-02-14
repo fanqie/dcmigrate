@@ -1,36 +1,35 @@
-this is a database migration tool based on Gorm
+这是一个基于 Gorm的数据库迁移工具
 
-**English | [中文](doc/zh_cn/README.md)**
-
+**[English](../../README.md) | 中文**
 # Warning⚠️
-- **This version is still in the experimental stage, please choose carefully！！！**
-# Quick start
-## Install dependencies
+- **目前版本还在实验中，请谨慎使用！！！**
+# 快速开始
+## 安装依赖
 ```shell
 go get -u github.com/fanqie/dcmigrate
 ```
-### Quickly Initialize Your Project
-[Guide Doc](doc/en/Initialize_Guide.md)
+### 快速初始化迁移工具在你的项目
+[操作指南文档](doc/zh_cn/Initialize_Guide.md)
 
 
-### Directory Structure
-This is the directory structure you obtained after initializing the project
+### 目录结构
+这个目录结构是初始化自动生成的
 ```shell
 example/
-├── dmc.go // This is the command-line tool for dcmigration
-├── dc_migrations // This is the migration file directory for dcmigration
-  └── register.go // This is the migration file registration file for dcmigration, which is automatically generated and maintained by dcmigration. Please do not manually modify it
-  └── 20230301_000000_create_users_table.go // This is the migration file for dcmigration
+├── dmc.go // 这个是dcmigrate 的命令行工具入口
+├── dc_migrations // 迁移文件目录
+  └── register.go // 这是dcmigration的迁移文件注册文件，由dcmigration自动生成和维护。请不要手动修改
+  └── 20230301_000000_create_users_table.go // 这是dcmigration的迁移文件
   
 ├── go.mod
 ├── go.sum
 └── ... you project files
 
 ```
-### Connect to Database
-Open the "dmc. go" file, modify the database connection information, and then run the dmc. go file. You can configure the database connection according to the reference code and the official Gorm documentation
+### 如何链接数据库
+打开“dmc.go”文件，修改数据库连接信息，然后运行dmc。去文件。您可以根据参考代码和Gorm官方文档配置数据库连接
 
-**[Gorm Connecting Database Doc Guide](https://gorm.io/docs/connecting_to_the_database.html)**
+**[Gorm连接数据库文档指南](https://gorm.io/docs/connecting_to_the_database.html)**
 ```shell
 package main
 
@@ -63,7 +62,7 @@ func main() {
 
 }
 
-// connecting_to_the_database more doc:  https://gorm.io/docs/connecting_to_the_database.html
+// Gorm连接数据库文档指南 doc:  https://gorm.io/docs/connecting_to_the_database.html
 
 func mysqlDialector() gorm.Dialector {
 	dsn := "root:root@tcp(127.0.0.1:3306)/test?charset=utf8mb4&parseTime=True&loc=Local"
@@ -109,8 +108,8 @@ func mysqlDialector() gorm.Dialector {
 //}
 
 ```
-### Generate
-#### Generate a createTable migration file
+### 生成
+#### 生成createTable迁移文件
 ```shell
 $ go run dmc.go gen --create users
 ```
@@ -121,9 +120,9 @@ $ go run dmc.go gen --create users
 [Info]create migration start
 [Success]ok! file name :[./dc_migrations/migration_v_2025_02_14_09_48_00_702_create_table_users.go]
 ```
-#### Edit the migration file
-[Guide Doc](doc/en/Edit_Migration.md)
-#### Generate a alterTable migration file
+#### 编辑迁移文件
+[操作指南文档](doc/zh_cn/Edit_Migration.md)
+#### 生成alterTable迁移文件
 ```shell
 $ go run dmc.go gen --alter users
 ```
@@ -134,8 +133,8 @@ $ go run dmc.go gen --alter users
 [Info]create migration start
 [Success]ok! file name :[./dc_migrations/migration_v_2025_02_14_09_55_03_505_alter_table_users.go]
 ```
-### Run Migration
-#### Migrate All
+### 运行迁移
+#### 全部迁移
 ```shell
 $ go run dmc.go migrate       
 ```
@@ -150,7 +149,7 @@ $ go run dmc.go migrate
 [Success]migration count: 0 version: V20250214095503505AlterTableUsers ok!
 [Info]migration done, handle count: 2
 ```
-#### Step Migration
+#### 步进迁移
 ```shell
 $ go run dmc.go migrate --step=1
 ```
@@ -163,7 +162,7 @@ $ go run dmc.go migrate --step=1
 [Success]migration count: 1 version: V20250214094800702CreateTableUsers ok!
 [Info]migration done, handle count: 1
 ```
-### Rollback Migration
+### 回滚迁移
 ```shell
 $ go run dmc.go rollback --step=1
 ```
@@ -176,7 +175,7 @@ $ go run dmc.go rollback --step=1
 [Success]rollback count:1 version: V20250214095503505AlterTableUsers ok!
 [Info]rollback done, handle count: 1
 ```
-### Rollback All
+### 回滚所有迁移
 ```shell
 $ go run dmc.go rollback --all 
 ```
@@ -192,14 +191,14 @@ $ go run dmc.go rollback --all
 [Info]rollback done, handle count: 2
 
 ```
-### Automatically generate migration description
-#### Automatically generate table structures for support based on databases
+### 自动生成迁移描述
+#### 基于数据库自动生成用于支持的表结构
 | id | tag                                      | already_migrated | created_at           | updated_at           | executed_at          | reverted_at          |
 |----|------------------------------------------|------------------|----------------------|----------------------|----------------------|----------------------|
 | 1  | v_2025_02_14_09_48_00_702_create_table_users | 1                | 2025-02-14 09:48:00.976 | 2025-02-14 10:05:20.698 | 2025-02-14 10:05:20.698 | 2025-02-14 10:04:50.403 |
 | 2  | v_2025_02_14_09_55_03_505_alter_table_users | 0                | 2025-02-14 09:55:03.022 | 2025-02-14 10:04:50.392 | 2025-02-14 10:04:36.251 | 2025-02-14 10:04:50.392 |
 
-#### Automatically generate directory structure
+#### 自动生成目录结构
 ```shell
 $ tree example/
 example/
@@ -224,7 +223,7 @@ func Register(migrate *pkg.DcMigrate) {
 }
 
 ```
-#### Automatically generate database List
+#### 自动生成数据库列表
 ```mysql
 USE test;
 SHOW TABLES;
