@@ -69,7 +69,7 @@
     }
     ```
 
-1. **便携你的迁移代码**
+1. **编写你的迁移代码**
  ```go
        // Up 迁移处理函数
        func (r *Migrate_Tag_CreateTableUsers) Up(tx *gorm.DB) error{

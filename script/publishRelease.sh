@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="v0.1.11-alpha"
+VERSION="v0.1.0-alpha"
 OUTPUT_FILE="./.github/workflows/release.yml"
 
 if [ -f "$OUTPUT_FILE" ]; then
@@ -119,7 +119,7 @@ echo "" >> "$OUTPUT_FILE_CN"
 echo "done：$OUTPUT_FILE_CN"
 
 git add .
-#git tag -d "${VERSION}"
+git tag -d "${VERSION}"
 git commit -m "release ${VERSION}"
 git tag -a "${VERSION}" -m "release ${VERSION}"
 git push origin "${VERSION}"
