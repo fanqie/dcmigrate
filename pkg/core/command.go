@@ -3,7 +3,10 @@ package core
 import (
 	"fmt"
 	"github.com/fanqie/dcmigrate/pkg/utility"
+	"github.com/fatih/color"
+	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/spf13/cobra"
+	"os"
 )
 
 func DefinedCommand(migrationsManage *MigratesManage, migrations map[string]DcMigrateImpl) {
@@ -108,10 +111,48 @@ func DefinedCommand(migrationsManage *MigratesManage, migrations map[string]DcMi
 
 	migrateCommand.Flags().IntP("step", "s", 1, "By default, all new migration file versions will be migrated, and you can also set the migration step size")
 	rootCmd.AddCommand(migrateCommand)
+
+	listCommand := &cobra.Command{
+		Use:   "list",
+		Short: "show all migrations record",
+		Run: func(cmd *cobra.Command, args []string) {
+			err := migrationsManage.RefreshMigrationsData(Db)
+			if err != nil {
+				return
+			}
+			//migrationsManage.MigrateList
+			t := table.NewWriter()
+			t.SetOutputMirror(os.Stdout)
+
+			// 设置表头和内容
+			t.AppendHeader(table.Row{"ID", "Tag", "CreatedAt", "AlreadyMigrated"})
+			var rows []table.Row
+			for _, migtation := range migrationsManage.MigrateList {
+
+				createdAt := migtation.CreatedAt.Format("2006-01-02 15:04:05")
+				status := color.New(color.FgHiBlue).Sprint("Pending")
+				if migtation.AlreadyMigrated {
+					status = color.New(color.FgHiGreen).Sprint("☑ Yes!")
+				}
+				rows = append(rows, table.Row{
+					migtation.ID,
+					migtation.Tag,
+					createdAt,
+					status,
+				})
+			}
+			t.AppendRows(rows)
+
+			// 自定义样式
+			t.SetStyle(table.StyleLight) // 内置简约样式
+
+			t.Render() // 输出表格
+		},
+	}
+	rootCmd.AddCommand(listCommand)
 	err := rootCmd.Execute()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-
 }

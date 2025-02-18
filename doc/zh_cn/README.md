@@ -133,6 +133,20 @@ $ go run dmc.go gen --alter users
 [Info]create migration start
 [Success]ok! file name :[./dc_migrations/migration_v_2025_02_14_09_55_03_505_alter_table_users.go]
 ```
+### 显示迁移列表
+```shell
+go run dmc.go list
+```
+```shell
+[Info]check dc_migrations table
+[Info]dc_migrations is ok
+┌────┬──────────────────────────────────────────────┬─────────────────────┬─────────────────┐
+│ ID │ TAG                                          │ CREATEDAT           │ ALREADYMIGRATED │
+├────┼──────────────────────────────────────────────┼─────────────────────┼─────────────────┤
+│  3 │ v_2025_02_14_13_50_55_793_create_table_users │ 2025-02-14 13:50:55 │ ☑ Yes!          │
+│  5 │ v_2025_02_14_14_05_56_456_alter_table_users  │ 2025-02-14 14:05:56 │ Pending         │
+└────┴──────────────────────────────────────────────┴─────────────────────┴─────────────────┘
+```
 ### 运行迁移
 #### 全部迁移
 ```shell
@@ -149,7 +163,7 @@ $ go run dmc.go migrate
 [Success]migration count: 0 version: V20250214095503505AlterTableUsers ok!
 [Info]migration done, handle count: 2
 ```
-#### 步进迁移
+#### 步进执行迁移
 ```shell
 $ go run dmc.go migrate --step=1
 ```

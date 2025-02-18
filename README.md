@@ -112,7 +112,7 @@ func mysqlDialector() gorm.Dialector {
 ### Generate
 #### Generate a createTable migration file
 ```shell
-$ go run dmc.go gen --create users
+go run dmc.go gen --create users
 ```
 ```shell
 [Info]check dc_migrations table
@@ -125,7 +125,7 @@ $ go run dmc.go gen --create users
 [Guide Doc](doc/en/Edit_Migration.md)
 #### Generate a alterTable migration file
 ```shell
-$ go run dmc.go gen --alter users
+go run dmc.go gen --alter users
 ```
 ```shell
 # output
@@ -134,10 +134,25 @@ $ go run dmc.go gen --alter users
 [Info]create migration start
 [Success]ok! file name :[./dc_migrations/migration_v_2025_02_14_09_55_03_505_alter_table_users.go]
 ```
+### Show Migrations List
+```shell
+go run dmc.go list
+```
+```shell
+[Info]check dc_migrations table
+[Info]dc_migrations is ok
+┌────┬──────────────────────────────────────────────┬─────────────────────┬─────────────────┐
+│ ID │ TAG                                          │ CREATEDAT           │ ALREADYMIGRATED │
+├────┼──────────────────────────────────────────────┼─────────────────────┼─────────────────┤
+│  3 │ v_2025_02_14_13_50_55_793_create_table_users │ 2025-02-14 13:50:55 │ ☑ Yes!          │
+│  5 │ v_2025_02_14_14_05_56_456_alter_table_users  │ 2025-02-14 14:05:56 │ Pending         │
+└────┴──────────────────────────────────────────────┴─────────────────────┴─────────────────┘
+```
+
 ### Run Migration
 #### Migrate All
 ```shell
-$ go run dmc.go migrate       
+go run dmc.go migrate       
 ```
 ```shell
 # output
@@ -152,7 +167,7 @@ $ go run dmc.go migrate
 ```
 #### Step Migration
 ```shell
-$ go run dmc.go migrate --step=1
+go run dmc.go migrate --step=1
 ```
 ```shell
 # output
@@ -165,7 +180,7 @@ $ go run dmc.go migrate --step=1
 ```
 ### Rollback Migration
 ```shell
-$ go run dmc.go rollback --step=1
+go run dmc.go rollback --step=1
 ```
 ```shell
 # output
@@ -178,7 +193,7 @@ $ go run dmc.go rollback --step=1
 ```
 ### Rollback All
 ```shell
-$ go run dmc.go rollback --all 
+go run dmc.go rollback --all 
 ```
 ```shell
 # output  
