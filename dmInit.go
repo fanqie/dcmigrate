@@ -54,7 +54,6 @@ func dmcContent() string {
 	return `package main
 
 import (
-	"github.com/fanqie/dcmigrate-example/dc_migrations"
 	"github.com/fanqie/dcmigrate/pkg"
 	"github.com/fanqie/dcmigrate/pkg/core"
 	"gorm.io/driver/mysql"

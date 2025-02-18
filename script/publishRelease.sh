@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="v0.1.0-alpha"
+VERSION="v0.1.1-alpha"
 OUTPUT_FILE="./.github/workflows/release.yml"
 
 if [ -f "$OUTPUT_FILE" ]; then
@@ -53,14 +53,30 @@ echo "# Quickly Initialize Your Project" > "$OUTPUT_FILE"
 echo "## Recommend method" >> "$OUTPUT_FILE"
 echo "### Wget" >> "$OUTPUT_FILE"
 echo '```bash' >> "$OUTPUT_FILE"
-echo "wget https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dc_migrations_template.zip -O dc_migrations_template.zip && unzip dc_migrations_template.zip" >> "$OUTPUT_FILE"
+echo "wget https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dc_migrations_template.zip -O dc_migrations_template.zip " >> "$OUTPUT_FILE"
+echo "unzip dc_migrations_template.zip" >> "$OUTPUT_FILE"
+echo "rm -f dc_migrations_template.zip" >> "$OUTPUT_FILE"
+echo '' >> "$OUTPUT_FILE"
 echo '```' >> "$OUTPUT_FILE"
 
 echo "### CURL" >> "$OUTPUT_FILE"
 echo '```bash' >> "$OUTPUT_FILE"
-echo "curl  https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dc_migrations_template.zip -o  dc_migrations_template.zip && unzip dc_migrations_template.zip" >> "$OUTPUT_FILE"
+echo "curl -L https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dc_migrations_template.zip -o  dc_migrations_template.zip" >> "$OUTPUT_FILE"
+echo "unzip dc_migrations_template.zip" >> "$OUTPUT_FILE"
+echo "rm -f dc_migrations_template.zip" >> "$OUTPUT_FILE"
 echo '' >> "$OUTPUT_FILE"
 echo '```' >> "$OUTPUT_FILE"
+
+echo "### POWER SHELL" >> "$OUTPUT_FILE"
+echo '```bash' >> "$OUTPUT_FILE"
+echo "curl  https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dc_migrations_template.zip -o  dc_migrations_template.zip" >> "$OUTPUT_FILE"
+echo 'Expand-Archive -Path dc_migrations_template.zip -DestinationPath .' >> "$OUTPUT_FILE"
+echo 'Remove-Item -Path dc_migrations_template.zip' >> "$OUTPUT_FILE"
+echo '' >> "$OUTPUT_FILE"
+echo '```' >> "$OUTPUT_FILE"
+
+
+
 
 echo "### Manual mode" >> "$OUTPUT_FILE"
 echo "**You can manually download and extract it to the root directory of the project**" >> "$OUTPUT_FILE"
@@ -88,14 +104,28 @@ echo "# 快速初始化您的项目" > "$OUTPUT_FILE_CN"
 echo "## 推荐方法" >> "$OUTPUT_FILE_CN"
 echo "### Wget" >> "$OUTPUT_FILE_CN"
 echo '```bash' >> "$OUTPUT_FILE_CN"
-echo "wget https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dc_migrations_template.zip -O dc_migrations_template.zip && unzip dc_migrations_template.zip" >> "$OUTPUT_FILE_CN"
+echo "wget https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dc_migrations_template.zip -O dc_migrations_template.zip " >> "$OUTPUT_FILE_CN"
+echo "unzip dc_migrations_template.zip" >> "$OUTPUT_FILE_CN"
+echo "rm -f dc_migrations_template.zip" >> "$OUTPUT_FILE_CN"
+echo '' >> "$OUTPUT_FILE_CN"
 echo '```' >> "$OUTPUT_FILE_CN"
 
 echo "### CURL" >> "$OUTPUT_FILE_CN"
 echo '```bash' >> "$OUTPUT_FILE_CN"
-echo "curl https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dc_migrations_template.zip -o dc_migrations_template.zip && unzip dc_migrations_template.zip" >> "$OUTPUT_FILE_CN"
+echo "curl -L  https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dc_migrations_template.zip -o  dc_migrations_template.zip" >> "$OUTPUT_FILE_CN"
+echo "unzip dc_migrations_template.zip" >> "$OUTPUT_FILE_CN"
+echo "rm -f dc_migrations_template.zip" >> "$OUTPUT_FILE_CN"
 echo '' >> "$OUTPUT_FILE_CN"
 echo '```' >> "$OUTPUT_FILE_CN"
+
+echo "### POWER SHELL" >> "$OUTPUT_FILE_CN"
+echo '```bash' >> "$OUTPUT_FILE_CN"
+echo "curl  https://github.com/fanqie/dcmigrate/releases/download/${VERSION}/dc_migrations_template.zip -o  dc_migrations_template.zip" >> "$OUTPUT_FILE_CN"
+echo 'Expand-Archive -Path dc_migrations_template.zip -DestinationPath .' >> "$OUTPUT_FILE_CN"
+echo 'Remove-Item -Path dc_migrations_template.zip' >> "$OUTPUT_FILE_CN"
+echo '' >> "$OUTPUT_FILE_CN"
+echo '```' >> "$OUTPUT_FILE_CN"
+
 
 echo "### 手动模式" >> "$OUTPUT_FILE_CN"
 echo "**您可以手动下载并将其解压到项目的根目录**" >> "$OUTPUT_FILE_CN"
