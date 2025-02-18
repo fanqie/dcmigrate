@@ -113,8 +113,9 @@ func DefinedCommand(migrationsManage *MigratesManage, migrations map[string]DcMi
 	rootCmd.AddCommand(migrateCommand)
 
 	listCommand := &cobra.Command{
-		Use:   "list",
-		Short: "show all migrations record",
+		Use:     "list",
+		Aliases: []string{"ls", "status"},
+		Short:   "show all migrations record",
 		Run: func(cmd *cobra.Command, args []string) {
 			err := migrationsManage.RefreshMigrationsData(Db)
 			if err != nil {

@@ -25,11 +25,11 @@ dcmigrate是一个基于gorm的数据库迁移工具， 与gorm migrate机制为
 go get -u github.com/fanqie/dcmigrate
 ```
 
-### 快速初始化迁移工具在你的项目
+## 快速初始化迁移工具在你的项目
 
 [操作指南文档](Initialize_Guide.md)
 
-### 目录结构
+## 目录结构
 
 这个目录结构是初始化自动生成的
 
@@ -45,7 +45,7 @@ example/
 └── ... you project files
 
 ```
-### 命令行使用说明
+## 命令行使用说明
 **您必须完成初始化操作**
 ```shell
 go run .\dmc.go --help
@@ -74,7 +74,7 @@ go run .\dmc.go --help
 使用 " [命令] --help" 查看有关某个命令的更多信息。
 
 ```
-### 如何链接数据库
+## 如何链接数据库
 
 打开“dmc.go”文件，修改数据库连接信息，然后运行dmc。去文件。您可以根据参考代码和Gorm官方文档配置数据库连接
 
@@ -159,9 +159,9 @@ func mysqlDialector() gorm.Dialector {
 
 ```
 
-### 生成
+## 生成
 
-#### 生成createTable迁移文件
+### 生成createTable迁移文件
 
 ```shell
 go run dmc.go gen --create users
@@ -175,11 +175,11 @@ go run dmc.go gen --create users
 [Success]ok! file name :[./dc_migrations/migration_v_2025_02_14_09_48_00_702_create_table_users.go]
 ```
 
-#### 编辑迁移文件
+### 编辑迁移文件
 
 [操作指南文档](Edit_Migration.md)
 
-#### 生成alterTable迁移文件
+### 生成alterTable迁移文件
 
 ```shell
 go run dmc.go gen --alter users
@@ -193,7 +193,7 @@ go run dmc.go gen --alter users
 [Success]ok! file name :[./dc_migrations/migration_v_2025_02_14_09_55_03_505_alter_table_users.go]
 ```
 
-### 显示迁移列表
+## 显示迁移列表
 
 ```shell
 go run dmc.go list
@@ -210,9 +210,9 @@ go run dmc.go list
 └────┴──────────────────────────────────────────────┴─────────────────────┴─────────────────┘
 ```
 
-### 运行迁移
+## 运行迁移
 
-#### 全部迁移
+### 全部迁移
 
 ```shell
 go run dmc.go migrate       
@@ -230,7 +230,7 @@ go run dmc.go migrate
 [Info]migration done, handle count: 2
 ```
 
-#### 步进执行迁移
+### 步进执行迁移
 
 ```shell
 go run dmc.go migrate --step=1
@@ -281,16 +281,16 @@ go run dmc.go rollback --all
 
 ```
 
-### 自动生成迁移描述
+## 自动生成迁移描述
 
-#### 基于数据库自动生成用于支持的表结构
+### 基于数据库自动生成用于支持的表结构
 
 | id | tag                                          | already_migrated | created_at              | updated_at              | executed_at             | reverted_at             |
 |----|----------------------------------------------|------------------|-------------------------|-------------------------|-------------------------|-------------------------|
 | 1  | v_2025_02_14_09_48_00_702_create_table_users | 1                | 2025-02-14 09:48:00.976 | 2025-02-14 10:05:20.698 | 2025-02-14 10:05:20.698 | 2025-02-14 10:04:50.403 |
 | 2  | v_2025_02_14_09_55_03_505_alter_table_users  | 0                | 2025-02-14 09:55:03.022 | 2025-02-14 10:04:50.392 | 2025-02-14 10:04:36.251 | 2025-02-14 10:04:50.392 |
 
-#### 自动生成目录结构
+### 自动生成目录结构
 
 ```shell
 $ tree example/
@@ -317,7 +317,7 @@ func Register(migrate *pkg.DcMigrate) {
 
 ```
 
-#### 自动生成数据库列表
+### 自动生成数据库列表
 
 ```mysql
 USE test;

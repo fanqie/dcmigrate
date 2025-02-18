@@ -24,11 +24,11 @@ Dcmigrate is a database migration tool based on Gorm, which complements the Gorm
 ```shell
 go get -u github.com/fanqie/dcmigrate
 ```
-### Quickly Initialize Your Project
+## Quickly Initialize Your Project
 [Guide Doc](doc/en/Initialize_Guide.md)
 
 
-### Directory Structure
+## Directory Structure
 This is the directory structure you obtained after initializing the project
 ```shell
 example/
@@ -42,7 +42,7 @@ example/
 └── ... you project files
 
 ```
-### Command line usage
+## Command line usage
 **You must complete the initialization operation**
 ```shell
 go run .\dmc.go --help
@@ -71,7 +71,7 @@ Flags:
 Use " [command] --help" for more information about a command.
 
 ```
-### Connect to Database
+## Connect to Database
 Open the "dmc. go" file, modify the database connection information, and then run the dmc. go file. You can configure the database connection according to the reference code and the official Gorm documentation
 
 **[Gorm Connecting Database Doc Guide](https://gorm.io/docs/connecting_to_the_database.html)**
@@ -153,8 +153,8 @@ func mysqlDialector() gorm.Dialector {
 //}
 
 ```
-### Generate
-#### Generate a createTable migration file
+## Generate
+### Generate a createTable migration file
 ```shell
 go run dmc.go gen --create users
 ```
@@ -165,9 +165,9 @@ go run dmc.go gen --create users
 [Info]create migration start
 [Success]ok! file name :[./dc_migrations/migration_v_2025_02_14_09_48_00_702_create_table_users.go]
 ```
-#### Edit the migration file
+### Edit the migration file
 [Guide Doc](doc/en/Edit_Migration.md)
-#### Generate a alterTable migration file
+### Generate a alterTable migration file
 ```shell
 go run dmc.go gen --alter users
 ```
@@ -178,7 +178,7 @@ go run dmc.go gen --alter users
 [Info]create migration start
 [Success]ok! file name :[./dc_migrations/migration_v_2025_02_14_09_55_03_505_alter_table_users.go]
 ```
-### Show Migrations List
+## Show Migrations List
 ```shell
 go run dmc.go list
 ```
@@ -193,8 +193,8 @@ go run dmc.go list
 └────┴──────────────────────────────────────────────┴─────────────────────┴─────────────────┘
 ```
 
-### Run Migration
-#### Migrate All
+## Run Migration
+### Migrate All
 ```shell
 go run dmc.go migrate       
 ```
@@ -209,7 +209,7 @@ go run dmc.go migrate
 [Success]migration count: 0 version: V20250214095503505AlterTableUsers ok!
 [Info]migration done, handle count: 2
 ```
-#### Step Migration
+### Step Migration
 ```shell
 go run dmc.go migrate --step=1
 ```
@@ -251,14 +251,14 @@ go run dmc.go rollback --all
 [Info]rollback done, handle count: 2
 
 ```
-### Automatically generate migration description
-#### Automatically generate table structures for support based on databases
+## Automatically generate migration description
+### Automatically generate table structures for support based on databases
 | id | tag                                      | already_migrated | created_at           | updated_at           | executed_at          | reverted_at          |
 |----|------------------------------------------|------------------|----------------------|----------------------|----------------------|----------------------|
 | 1  | v_2025_02_14_09_48_00_702_create_table_users | 1                | 2025-02-14 09:48:00.976 | 2025-02-14 10:05:20.698 | 2025-02-14 10:05:20.698 | 2025-02-14 10:04:50.403 |
 | 2  | v_2025_02_14_09_55_03_505_alter_table_users | 0                | 2025-02-14 09:55:03.022 | 2025-02-14 10:04:50.392 | 2025-02-14 10:04:36.251 | 2025-02-14 10:04:50.392 |
 
-#### Automatically generate directory structure
+### Automatically generate directory structure
 ```shell
 $ tree example/
 example/
@@ -283,7 +283,7 @@ func Register(migrate *pkg.DcMigrate) {
 }
 
 ```
-#### Automatically generate database List
+### Automatically generate database List
 ```mysql
 USE test;
 SHOW TABLES;
