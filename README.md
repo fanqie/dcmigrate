@@ -1,9 +1,24 @@
-this is a database migration tool based on Gorm
-
 **English | [中文](doc/zh_cn/README.md)**
+Dcmigrate is a database migration tool based on Gorm, which complements the Gorm migration mechanism without any functional conflicts, aiming to provide a more user-friendly database migration tool
 
-# Warning⚠️
-- **This version is still in the experimental stage, please choose carefully！！！**
+
+# Features
+- Supports databases such as MySQL, SQLite, PostgreSQL, SQL Server, TIDB, Clickhouse, etc
+- Equipped with command-line tools
+- Table model migration dependent on Gorm
+- Automatically generate migration files
+- Support file migration by step size
+- Support rollback function
+- Support step-by-step rollback
+- View migration list and status
+- Explicit implementation of "up" and "down" functions
+
+# Warning ⚠️
+
+- The current version is still gradually iterating, please ensure continuous feature upgrades**
+
+
+
 # Quick start
 ## Install dependencies
 ```shell
@@ -25,6 +40,35 @@ example/
 ├── go.mod
 ├── go.sum
 └── ... you project files
+
+```
+### Command line usage
+**You must complete the initialization operation**
+```shell
+go run .\dmc.go --help
+```
+```shell
+[Info]check dc_migrations table
+[Info]dc_migrations is ok
+Usage:
+   [command]
+
+Available Commands:
+  completion  Generate the autocompletion script for the specified shell
+  gen         generate a new core file
+        syntax：dmc gen  [--create|--alter]  {table_name}
+        usage：`dmc gen --create user` //or `dmc gen --alter user`
+  help        Help about any command
+  list        show all migrations record
+  migrate     all new migration file versions will be migrated or target step size version
+  rollback    rollback history migrates
+        syntax：dmc rollback  [--step=1] [--all]  {table_name}
+        usage：`dmc rollback --step=2` //or `dmc rollback --all`
+
+Flags:
+  -h, --help   help for this command
+
+Use " [command] --help" for more information about a command.
 
 ```
 ### Connect to Database
