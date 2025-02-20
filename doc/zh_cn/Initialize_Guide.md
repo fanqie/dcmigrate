@@ -2,28 +2,28 @@
 ## 推荐方法
 ### Wget
 ```bash
-wget https://github.com/fanqie/dcmigrate/releases/download/v0.1.5/dc_migrations_template.zip -O dc_migrations_template.zip 
+wget https://github.com/fanqie/dcmigrate/releases/download/v0.1.6/dc_migrations_template.zip -O dc_migrations_template.zip 
 unzip dc_migrations_template.zip
 rm -f dc_migrations_template.zip
 
 ```
 ### CURL
 ```bash
-curl -L  https://github.com/fanqie/dcmigrate/releases/download/v0.1.5/dc_migrations_template.zip -o  dc_migrations_template.zip
+curl -L  https://github.com/fanqie/dcmigrate/releases/download/v0.1.6/dc_migrations_template.zip -o  dc_migrations_template.zip
 unzip dc_migrations_template.zip
 rm -f dc_migrations_template.zip
 
 ```
 ### POWER SHELL
 ```bash
-curl  https://github.com/fanqie/dcmigrate/releases/download/v0.1.5/dc_migrations_template.zip -o  dc_migrations_template.zip
+curl  https://github.com/fanqie/dcmigrate/releases/download/v0.1.6/dc_migrations_template.zip -o  dc_migrations_template.zip
 Expand-Archive -Path dc_migrations_template.zip -DestinationPath .
 Remove-Item -Path dc_migrations_template.zip
 
 ```
 ### 手动模式
 **您可以手动下载并将其解压到项目的根目录**
-[下载模板压缩包](https://github.com/fanqie/dcmigrate/releases/download/v0.1.5/dc_migrations_template.zip)
+[下载模板压缩包](https://github.com/fanqie/dcmigrate/releases/download/v0.1.6/dc_migrations_template.zip)
 ## 成功
 当您看到以下目录结构时，说明已成功
 ```shell
