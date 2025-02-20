@@ -5,16 +5,19 @@ const MigrationCreateTableCode = `package dc_migrations
 import (
 	migrate "github.com/fanqie/dcmigrate/pkg/core"
 	"gorm.io/gorm"
+	"time"
 )
 
 type Migrate{{TypeTag}} struct {
 	migrate.MigrateBasic
-	currentTable *Struct{{TypeTag}}
+	upStruct *Struct{{TypeTag}}Up
+	downStruct *Struct{{TypeTag}}Down
 }
 
 func NewMigrate{{TypeTag}}() *Migrate{{TypeTag}} {
 	return &Migrate{{TypeTag}}{
-		currentTable:&Struct{{TypeTag}}{},
+		upStruct:&Struct{{TypeTag}}Up{},
+		downStruct:&Struct{{TypeTag}}Down{},
 	}
 }
 func (r *Migrate{{TypeTag}}) Register() {
@@ -24,20 +27,24 @@ func (r *Migrate{{TypeTag}}) Register() {
 // !!!BEGIN!!!
 // Here is the code that you are focusing on
 
-type Struct{{TypeTag}} struct{
-	Id        int64 ` + "`" + `gorm:"primaryKey;autoIncrement"` + "`" + `
-	CreatedAt int64 ` + "`" + `gorm:"autoCreateTime"` + "`" + `
-	UpdatedAt int64 ` + "`" + `gorm:"autoUpdateTime"` + "`" + `
-	DeletedAt int64 ` + "`" + `gorm:"index"` + "`" + `
+type Struct{{TypeTag}}Up struct{
+	Id        uint32 ` + "`" + `gorm:"primaryKey;autoIncrement"` + "`" + `
+	CreatedAt time.Time ` + "`" + `gorm:"autoCreateTime"` + "`" + `
+	UpdatedAt time.Time ` + "`" + `gorm:"autoUpdateTime"` + "`" + `
+	DeletedAt time.Time ` + "`" + `gorm:"index"` + "`" + `
 }
-
-func (*Struct{{TypeTag}}) TableName() string {
+type Struct{{TypeTag}}Down struct{
+}
+func (*Struct{{TypeTag}}Up) TableName() string {
+	return "{{TableName}}"
+}
+func (*Struct{{TypeTag}}Down) TableName() string {
 	return "{{TableName}}"
 }
 // Up is migration function
 func (r *Migrate{{TypeTag}}) Up(tx *gorm.DB) error{
 	
-	err := tx.Migrator().CreateTable(r.currentTable)
+	err := tx.Migrator().CreateTable(r.upStruct)
 	if err != nil {
 		return err
 	}
@@ -45,7 +52,7 @@ func (r *Migrate{{TypeTag}}) Up(tx *gorm.DB) error{
 }
 // Down is rollback function
 func (r *Migrate{{TypeTag}}) Down(tx *gorm.DB) error{
-	err := tx.Migrator().DropTable(r.currentTable)
+	err := tx.Migrator().DropTable(r.downStruct)
 	if err != nil {
 		return err
 	}
@@ -71,36 +78,48 @@ import (
 
 type Migrate{{TypeTag}} struct {
 	migrate.MigrateBasic
-	currentTable *Struct{{TypeTag}}
+	upStruct *Struct{{TypeTag}}Up
+	downStruct *Struct{{TypeTag}}Down
 }
 
 func NewMigrate{{TypeTag}}() *Migrate{{TypeTag}} {
 	return &Migrate{{TypeTag}}{
-		currentTable:&Struct{{TypeTag}}{},
+		upStruct:&Struct{{TypeTag}}Up{},
+		downStruct:&Struct{{TypeTag}}Down{},
 	}
 }
 
 // Up is migration function
 func (r *Migrate{{TypeTag}}) Register() {
 	r.Tag = "{{Tag}}"
-
 }
 // !!!BEGIN!!!
 // ↓↓↓↓↓↓ Here is the code that you are focusing on
 
-type Struct{{TypeTag}} struct{
+type Struct{{TypeTag}}Up struct{
 	UserName        string ` + "`" + `gorm:"type:varchar(100);"` + "`" + `
+	Id       		int32  ` + "`" + `gorm:"primaryKey;autoIncrement"` + "`" + `
 	NickName        string ` + "`" + `gorm:"type:varchar(100);"` + "`" + `
 }
-func (*Struct{{TypeTag}}) TableName() string {
+type Struct{{TypeTag}}Down struct{
+	Id       		uint32  ` + "`" + `gorm:"primaryKey;autoIncrement"` + "`" + `
+}
+func (*Struct{{TypeTag}}Up) TableName() string {
+	return "{{TableName}}"
+}
+func (*Struct{{TypeTag}}Down) TableName() string {
 	return "{{TableName}}"
 }
 func (r *Migrate{{TypeTag}}) Up(tx *gorm.DB) error{
-	err := tx.Migrator().AddColumn(r.currentTable,"UserName")
+	err := tx.Migrator().AlterColumn(r.upStruct,"Id")
 	if err != nil {
 			return err
 	}
-	err = tx.Migrator().AddColumn(r.currentTable,"NickName")
+	err = tx.Migrator().AddColumn(r.upStruct,"UserName")
+	if err != nil {
+			return err
+	}
+	err = tx.Migrator().AddColumn(r.upStruct,"NickName")
 	if err != nil {
 		return err
 	}
@@ -108,12 +127,16 @@ func (r *Migrate{{TypeTag}}) Up(tx *gorm.DB) error{
 }
 // Down is rollback function
 func (r *Migrate{{TypeTag}}) Down(tx *gorm.DB) error{
-	err := tx.Migrator().DropColumn(r.currentTable, "UserName")
+    err := tx.Migrator().AlterColumn(r.downStruct, "Id")
+	if err != nil {
+		return err
+	}
+	err = tx.Migrator().DropColumn(r.downStruct, "UserName")
 	if err != nil {
 		return err
 	}
 
-	err = tx.Migrator().DropColumn(r.currentTable, "NickName")
+	err = tx.Migrator().DropColumn(r.downStruct, "NickName")
 	if err != nil {
 		return err
 	}

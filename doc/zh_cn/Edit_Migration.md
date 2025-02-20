@@ -30,7 +30,7 @@
     // Up 是迁移处理函数
     func (r *Migrate_Tag_CreateTableUsers) Up(tx *gorm.DB) error{
         //tx 是 gorm.DB 实例
-        err := tx.Migrator().CreateTable(r.currentTable)
+        err := tx.Migrator().CreateTable(r.upStruct)
         if err != nil {
             return err
         }
@@ -42,7 +42,7 @@
     // Down 是回滚处理函数
     func (r *Migrate_Tag_CreateTableUsers) Down(tx *gorm.DB) error{
         //tx 是 gorm.DB 实例
-        err := tx.Migrator().DropTable(r.currentTable)
+        err := tx.Migrator().DropTable(r.downStruct)
         if err != nil {
             return err
         }
@@ -63,10 +63,15 @@
     ```
 1. **声明数据结构**
     ```go
-    type StructV20250214135137508AlterTableUsers struct{
+    //要迁移的字段数据结构，表名对应关系会自动生成
+    type StructV20250214135137508AlterTableUsersUp struct{
 	    UserName        string `gorm:"gorm:"type:varchar(100);""`
 	    NickName        string `gorm:"gorm:"type:varchar(120);""`
     }
+   
+   //要回滚数据结构，如果删除表或者字段，则不需要声明字段，如果是修改字段则必须声明字段
+   type StructV20250214135137508AlterTableUsersDown struct{
+   }
     ```
 
 1. **编写你的迁移代码**
@@ -74,11 +79,11 @@
        // Up 迁移处理函数
        func (r *Migrate_Tag_CreateTableUsers) Up(tx *gorm.DB) error{
 //tx 是 gorm.DB 实例
-          err := tx.Migrator().AddColumn(r.currentTable,"UserName")
+          err := tx.Migrator().AddColumn(r.upStruct,"UserName")
           if err != nil {
             return err
           }
-          err := tx.Migrator().AddColumn(r.currentTable,"NickName")
+          err := tx.Migrator().AddColumn(r.upStruct,"NickName")
           if err != nil {
               return err
           }
@@ -91,12 +96,12 @@
     // Down 是回滚处理函数
     func (r *Migrate_Tag_CreateTableUsers) Down(tx *gorm.DB) error{
         //tx 是 gorm.DB 实例
-      err := tx.Migrator().DropColumn(r.currentTable, "UserName")
+      err := tx.Migrator().DropColumn(r.downStruct, "UserName")
        if err != nil {
            return err
        }
    
-       err = tx.Migrator().DropColumn(r.currentTable, "NickName")
+       err = tx.Migrator().DropColumn(r.downStruct, "NickName")
        if err != nil {
            return err
        }

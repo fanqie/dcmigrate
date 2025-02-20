@@ -30,7 +30,7 @@
     // Up is migration function
     func (r *Migrate_Tag_CreateTableUsers) Up(tx *gorm.DB) error{
         //tx is the gorm.DB instance
-        err := tx.Migrator().CreateTable(r.currentTable)
+        err := tx.Migrator().CreateTable(r.upStruct)
         if err != nil {
             return err
         }
@@ -42,7 +42,7 @@
     // Down is rollback function
     func (r *Migrate_Tag_CreateTableUsers) Down(tx *gorm.DB) error{
         //tx is the gorm.DB instance
-        err := tx.Migrator().DropTable(r.currentTable)
+        err := tx.Migrator().DropTable(r.downStruct)
         if err != nil {
             return err
         }
@@ -63,10 +63,15 @@
     ```
 1. **define the struct**
     ```go
-    type StructV20250214135137508AlterTableUsers struct{
+    //The field data structure to be migrated and the table name correspondence will be automatically generated
+    type StructV20250214135137508AlterTableUsersUp struct{
 	    UserName        string `gorm:"gorm:"type:varchar(100);""`
 	    NickName        string `gorm:"gorm:"type:varchar(120);""`
     }
+   
+   //To roll back a data structure, if a table or field is deleted, there is no need to declare the field. If a field is modified, it must be declared
+   type StructV20250214135137508AlterTableUsersDown struct{
+   }
     ```
 
 1. **write your migration code**
@@ -74,11 +79,11 @@
        // Up is migration function
        func (r *Migrate_Tag_CreateTableUsers) Up(tx *gorm.DB) error{
            //tx is the gorm.DB instance
-          err := tx.Migrator().AddColumn(r.currentTable,"UserName")
+          err := tx.Migrator().AddColumn(r.upStruct,"UserName")
           if err != nil {
             return err
           }
-          err := tx.Migrator().AddColumn(r.currentTable,"NickName")
+          err := tx.Migrator().AddColumn(r.upStruct,"NickName")
           if err != nil {
               return err
           }
@@ -91,12 +96,12 @@
     // Down is rollback function
     func (r *Migrate_Tag_CreateTableUsers) Down(tx *gorm.DB) error{
         //tx is the gorm.DB instance
-      err := tx.Migrator().DropColumn(r.currentTable, "UserName")
+      err := tx.Migrator().DropColumn(r.downStruct, "UserName")
        if err != nil {
            return err
        }
    
-       err = tx.Migrator().DropColumn(r.currentTable, "NickName")
+       err = tx.Migrator().DropColumn(r.downStruct, "NickName")
        if err != nil {
            return err
        }
