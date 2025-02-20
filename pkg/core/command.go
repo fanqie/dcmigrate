@@ -64,6 +64,7 @@ func DefinedCommand(migrationsManage *MigratesManage, migrations map[string]DcMi
 				value, _ := cmd.Flags().GetInt("step")
 				step = value
 			} else {
+				step = 1
 				if cmd.Flags().Changed("all") {
 					isAll, _ := cmd.Flags().GetBool("all")
 					if isAll {
