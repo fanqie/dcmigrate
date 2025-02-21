@@ -1,6 +1,7 @@
 package core
 
 import (
+	"fmt"
 	"github.com/fanqie/dcmigrate/pkg/utility"
 	"gorm.io/gorm"
 )
@@ -40,7 +41,7 @@ func (r *MigratesManage) RefreshMigrationsData(tx *gorm.DB) error {
 	return nil
 }
 
-func (r *MigratesManage) CheckTable() {
+func (r *MigratesManage) CheckTable(migrations map[string]DcMigrateImpl) {
 	utility.InfoPrint("check dc_migrations table")
 	if !Db.Migrator().HasTable(&MigrateBasic{}) {
 		err := Db.AutoMigrate(&MigrateBasic{})
@@ -52,4 +53,30 @@ func (r *MigratesManage) CheckTable() {
 	} else {
 		utility.InfoPrint("dc_migrations is ok")
 	}
+	r.checkRegistry(migrations)
+
+}
+func (r *MigratesManage) checkRegistry(migrations map[string]DcMigrateImpl) {
+	err := Db.Transaction(func(tx *gorm.DB) error {
+		fmt.Println(migrations)
+		for _, migration := range migrations {
+			var count int64
+			tx.Model(&MigrateBasic{}).Where("tag = ?", migration.GetTag()).Count(&count)
+			fmt.Printf("migration:%v,count:%d\n", migration.GetTag(), count)
+			//if count == 0 {
+			//	tx.Save(&MigrateBasic{
+			//		Tag:             migration.GetTag(),
+			//		AlreadyMigrated: false,
+			//		CreatedAt:       time.Now(),
+			//		UpdatedAt:       time.Now(),
+			//	})
+			//}
+		}
+		return nil
+	})
+	if err != nil {
+		utility.ErrPrintf("the database connect error:%s", err.Error())
+		panic(err)
+	}
+
 }

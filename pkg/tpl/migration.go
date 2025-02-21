@@ -97,12 +97,14 @@ func (r *Migrate{{TypeTag}}) Register() {
 // ↓↓↓↓↓↓ Here is the code that you are focusing on
 
 type Struct{{TypeTag}}Up struct{
-	UserName        string ` + "`" + `gorm:"type:varchar(100);"` + "`" + `
 	Id       		int32  ` + "`" + `gorm:"primaryKey;autoIncrement"` + "`" + `
+	UserName        string ` + "`" + `gorm:"type:varchar(100);"` + "`" + `
 	NickName        string ` + "`" + `gorm:"type:varchar(100);"` + "`" + `
 }
 type Struct{{TypeTag}}Down struct{
 	Id       		uint32  ` + "`" + `gorm:"primaryKey;autoIncrement"` + "`" + `
+	UserName        string ` + "`" + `gorm:"type:varchar(100);"` + "`" + `
+	NickName        string ` + "`" + `gorm:"type:varchar(100);"` + "`" + `
 }
 func (*Struct{{TypeTag}}Up) TableName() string {
 	return "{{TableName}}"

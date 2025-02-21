@@ -30,8 +30,11 @@ func (r *DcMigrate) Setup(db core.GromParams, afterHandle func()) {
 	if r.isDebug {
 		r.DbTool.Db.Debug()
 	}
+	for _, migration := range r.migrations {
+		migration.Register()
+	}
 	r.MigrationsManage = core.NewMigratesManage()
-	r.MigrationsManage.CheckTable()
+	r.MigrationsManage.CheckTable(r.migrations)
 	core.DefinedCommand(r.MigrationsManage, r.migrations)
 	afterHandle()
 
