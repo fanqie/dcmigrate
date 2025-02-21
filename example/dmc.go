@@ -21,7 +21,7 @@ func main() {
 		//Dialector: tiDBDialector(),
 		//Dialector: clickhouseDialector(),
 		Opts: &gorm.Config{
-			Logger: logger.Default.LogMode(logger.Error),
+			Logger: logger.Default.LogMode(logger.Info),
 		},
 	}, func() {
 
@@ -73,5 +73,3 @@ func mysqlDialector() gorm.Dialector {
 //	dsn := "tcp://localhost:9000?database=gorm&username=gorm&password=gorm&read_timeout=10&write_timeout=20"
 //	return clickhouse.Open(dsn)
 //}
-
-
