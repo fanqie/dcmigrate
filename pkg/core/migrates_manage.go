@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/fanqie/dcmigrate/pkg/utility"
 	"gorm.io/gorm"
+	"time"
 )
 
 type MigratesManage struct {
@@ -63,14 +64,14 @@ func (r *MigratesManage) checkRegistry(migrations map[string]DcMigrateImpl) {
 			var count int64
 			tx.Model(&MigrateBasic{}).Where("tag = ?", migration.GetTag()).Count(&count)
 			fmt.Printf("migration:%v,count:%d\n", migration.GetTag(), count)
-			//if count == 0 {
-			//	tx.Save(&MigrateBasic{
-			//		Tag:             migration.GetTag(),
-			//		AlreadyMigrated: false,
-			//		CreatedAt:       time.Now(),
-			//		UpdatedAt:       time.Now(),
-			//	})
-			//}
+			if count == 0 {
+				tx.Save(&MigrateBasic{
+					Tag:             migration.GetTag(),
+					AlreadyMigrated: false,
+					CreatedAt:       time.Now(),
+					UpdatedAt:       time.Now(),
+				})
+			}
 		}
 		return nil
 	})
