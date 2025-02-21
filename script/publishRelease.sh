@@ -152,5 +152,5 @@ git add .
 git tag -d "${VERSION}"
 git commit -m "release ${VERSION}"
 git tag -a "${VERSION}" -m "release ${VERSION}"
-git push origin "${VERSION}"
+git push origin "${VERSION}" -f
 git push origin main
