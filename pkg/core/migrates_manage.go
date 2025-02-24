@@ -19,7 +19,7 @@ func NewMigratesManage() *MigratesManage {
 }
 func (r *MigratesManage) RefreshMigrationsData(tx *gorm.DB) error {
 	var migrateList []*MigrateBasic
-	result := tx.Order("created_at asc").Find(&migrateList)
+	result := tx.Order("tag asc").Find(&migrateList)
 	if result.Error != nil {
 		utility.ErrPrintf("the database connect error:%s", result.Error.Error())
 		return result.Error
