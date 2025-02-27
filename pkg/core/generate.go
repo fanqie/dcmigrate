@@ -15,7 +15,10 @@ type GenArgs struct {
 }
 
 func gen(genArgs GenArgs, migrationsManage *MigratesManage) (error, string) {
-
+	//if genArgs.TableName == "test" {
+	//	utility.ErrPrint("tableName is not support")
+	//	return nil, ""
+	//}
 	mb := &MigrateBasic{}
 	mb.genRecord(genArgs)
 	var fileName string
@@ -35,7 +38,7 @@ func gen(genArgs GenArgs, migrationsManage *MigratesManage) (error, string) {
 }
 func GenFile(r *MigrateBasic, migrationsManage *MigratesManage, genArgs GenArgs) (error, string) {
 
-	migrateFileName := fmt.Sprintf("./dc_migrations/migration_%s.go", r.Tag)
+	migrateFileName := fmt.Sprintf("./dc_migrations/migration_%s_.go", r.Tag)
 	registerFileName := "./dc_migrations/register.go"
 
 	err := saveFile(migrateFileName, makeMigrateFile(r, genArgs))

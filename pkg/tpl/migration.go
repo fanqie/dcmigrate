@@ -44,16 +44,14 @@ func (*Struct{{TypeTag}}Down) TableName() string {
 // Up is migration function
 func (r *Migrate{{TypeTag}}) Up(tx *gorm.DB) error{
 	
-	err := tx.Migrator().CreateTable(r.upStruct)
-	if err != nil {
+	if err := tx.Migrator().CreateTable(r.upStruct); err != nil {
 		return err
 	}
 	return nil
 }
 // Down is rollback function
 func (r *Migrate{{TypeTag}}) Down(tx *gorm.DB) error{
-	err := tx.Migrator().DropTable(r.downStruct)
-	if err != nil {
+	if err := tx.Migrator().DropTable(r.downStruct); err != nil {
 		return err
 	}
 	return nil
@@ -113,33 +111,27 @@ func (*Struct{{TypeTag}}Down) TableName() string {
 	return "{{TableName}}"
 }
 func (r *Migrate{{TypeTag}}) Up(tx *gorm.DB) error{
-	err := tx.Migrator().AlterColumn(r.upStruct,"Id")
-	if err != nil {
+	if err := tx.Migrator().AlterColumn(r.upStruct,"Id");err != nil {
 			return err
 	}
-	err = tx.Migrator().AddColumn(r.upStruct,"UserName")
-	if err != nil {
+	if err := tx.Migrator().AddColumn(r.upStruct,"UserName"); err != nil {
 			return err
 	}
-	err = tx.Migrator().AddColumn(r.upStruct,"NickName")
-	if err != nil {
+	if err := tx.Migrator().AddColumn(r.upStruct,"NickName"); err != nil {
 		return err
 	}
 	return nil
 }
 // Down is rollback function
 func (r *Migrate{{TypeTag}}) Down(tx *gorm.DB) error{
-    err := tx.Migrator().AlterColumn(r.downStruct, "Id")
-	if err != nil {
+   if err := tx.Migrator().AlterColumn(r.downStruct, "Id"); err != nil {
 		return err
 	}
-	err = tx.Migrator().DropColumn(r.downStruct, "UserName")
-	if err != nil {
+	if err := tx.Migrator().DropColumn(r.downStruct, "UserName"); err != nil {
 		return err
 	}
 
-	err = tx.Migrator().DropColumn(r.downStruct, "NickName")
-	if err != nil {
+	if err := tx.Migrator().DropColumn(r.downStruct, "NickName"); err != nil {
 		return err
 	}
 	return nil

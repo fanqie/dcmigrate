@@ -73,6 +73,7 @@ func main() {
 		//Dialector: tiDBDialector(),
 		//Dialector: clickhouseDialector(),
 		Opts: &gorm.Config{
+			//Logger: logger.Default.LogMode(logger.Info),
 			Logger: logger.Default.LogMode(logger.Error),
 		},
 	}, func() {
