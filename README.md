@@ -3,15 +3,14 @@
 Dcmigrate is a database migration tool based on Gorm, which complements the Gorm migration mechanism without any functional conflicts, aiming to provide a more user-friendly database migration tool
 
 # Features
-- Supports databases such as MySQL, SQLite, PostgreSQL, SQL Server, TIDB, Clickhouse, etc
-- Equipped with command-line tools
-- Table model migration dependent on Gorm
-- Automatically generate migration files
-- Support file migration by step size
-- Support rollback function
-- Support step-by-step rollback
-- View migration list and status
-- Explicit implementation of "up" and "down" functions
+- Supports mysql, sqlite, postgres, sqlserver, tidb, clickhouse and other databases
+- Command line tool
+- Depends on gorm
+- Supports executing migration files in steps
+- Supports rollback function
+- Can view migration list and status
+- Explicit "up" and "down" function implementation
+- Supports repairing migration records
 
 # Warning ⚠️
 
@@ -70,6 +69,16 @@ Flags:
 
 Use " [command] --help" for more information about a command.
 
+```
+###Command line conflict resolution
+If you use 'go run' when running the project` To start, there may be command line conflicts due to two 'funcmain()' appearing in the root directory at the same time. You can resolve this issue by:
+```shell
+//When a conflict occurs, you can directly specify the entry file name to run your project, for example:
+//Go run [project entry file. go]
+go run main.go
+// go run app.go
+// go run entry.go
+// ...
 ```
 ## Connect to Database
 Open the "dmc. go" file, modify the database connection information, and then run the dmc. go file. You can configure the database connection according to the reference code and the official Gorm documentation
@@ -249,6 +258,25 @@ go run dmc.go rollback --all
 [Info]rollback(99999999):V20250214094800702CreateTableUsers
 [Success]rollback count:99999999 version: V20250214094800702CreateTableUsers ok!
 [Info]rollback done, handle count: 2
+
+```
+
+### Repair Migration [New Feature]
+**When the migration table cannot be migrated correctly due to operational errors, this command can be used**
+
+If there are any issues with the status, it needs to be manually modified in the database
+```shell
+go run dmc.go repair
+```
+```shell
+[Info]check dc_migrations table
+[Info]dc_migrations is ok
+[Info]Fix unmatched items start  
+[Success]Fix unmatched items count:0 
+[Info]Fix missing items start
+[Success]Fix missing items count:0
+[Warning]If there are any issues with the status, it needs to be manually modified in the database
+[Success]repair ok!
 
 ```
 ## Automatically generate migration description

@@ -4,14 +4,13 @@ dcmigrate是一个基于gorm的数据库迁移工具， 与gorm migrate机制为
 ### 特性
 
 - 支持mysql、sqlite、postgres、sqlserver、tidb、clickhouse等数据库
-- 具备命令行工具
-- 依赖gorm的表模型迁移
-- 迁移文件自动生成
+- 命令行工具
+- 依赖gorm
 - 支持按步长执行迁移文件
 - 支持回滚功能
-- 支持按步骤回滚
 - 可查看迁移列表以及状态
 - 显式的“up”、“down” 函数实现
+- 支持修复迁移记录
 
 # Warning⚠️
 
@@ -73,6 +72,16 @@ go run .\dmc.go --help
 
 使用 " [命令] --help" 查看有关某个命令的更多信息。
 
+```
+### 命令行冲突解决
+如果您在运行项目时，采用`go run . `来启动，可能会出现命令行冲突,这是因为根目录同时出现了两个`func main()`，您可以通过以下方式解决：
+```shell
+//当发生冲突时，您可以直接指定入口文件名称来运行您的项目，例如：
+//go run [工程入口文件.go]
+go run main.go
+// go run app.go
+// go run entry.go
+// ...
 ```
 ## 如何链接数据库
 
@@ -278,6 +287,27 @@ go run dmc.go rollback --all
 [Info]rollback(99999999):V20250214094800702CreateTableUsers
 [Success]rollback count:99999999 version: V20250214094800702CreateTableUsers ok!
 [Info]rollback done, handle count: 2
+
+```
+### 修复迁移记录 [新特性]
+
+
+**当迁移表由于操作错误而无法正确执行迁移时，可以使用此命令**
+
+如果状态有任何问题，则需要在数据库中手动修改
+
+```shell
+go run dmc.go repair
+```
+```shell
+[Info]check dc_migrations table
+[Info]dc_migrations is ok
+[Info]Fix unmatched items start  
+[Success]Fix unmatched items count:0 
+[Info]Fix missing items start
+[Success]Fix missing items count:0
+[Warning]If there are any issues with the status, it needs to be manually modified in the database
+[Success]repair ok!
 
 ```
 

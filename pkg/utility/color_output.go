@@ -6,7 +6,7 @@ import (
 )
 
 func ErrPrintf(str string, values ...interface{}) {
-	_, err := color.New(color.FgHiRed).Printf(fmt.Sprintf("[Error]%s", str), values...)
+	_, err := color.New(color.FgHiRed).Printf(fmt.Sprintf("[Error]%s\n", str), values...)
 	if err != nil {
 		panic(err)
 	}
@@ -18,7 +18,7 @@ func ErrPrint(str string) {
 	}
 }
 func SuccessPrintf(str string, values ...interface{}) {
-	_, err := color.New(color.FgHiGreen).Printf(fmt.Sprintf("[Success]%s", str), values...)
+	_, err := color.New(color.FgHiGreen).Printf(fmt.Sprintf("[Success]%s\n", str), values...)
 	if err != nil {
 		panic(err)
 	}
@@ -30,7 +30,7 @@ func SuccessPrint(str string) {
 	}
 }
 func InfoPrintf(str string, values ...interface{}) {
-	_, err := color.New(color.FgHiBlue).Printf(fmt.Sprintf("[Info]%s", str), values...)
+	_, err := color.New(color.FgHiBlue).Printf(fmt.Sprintf("[Info]%s\n", str), values...)
 	if err != nil {
 		panic(err)
 	}
@@ -42,7 +42,7 @@ func InfoPrint(str string) {
 	}
 }
 func WarningPrintf(str string, values ...interface{}) {
-	_, err := color.New(color.FgHiYellow).Printf(fmt.Sprintf("[Warning]%s", str), values...)
+	_, err := color.New(color.FgHiYellow).Printf(fmt.Sprintf("[Warning]%s\n", str), values...)
 	if err != nil {
 		panic(err)
 	}

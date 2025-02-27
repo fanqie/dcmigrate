@@ -152,6 +152,14 @@ func DefinedCommand(migrationsManage *MigratesManage, migrations map[string]DcMi
 		},
 	}
 	rootCmd.AddCommand(listCommand)
+	repairCommand := &cobra.Command{
+		Use:   "repair",
+		Short: "Fix migration records without changing the status. If there are any issues with the status, it needs to be manually modified in the database",
+		Run: func(cmd *cobra.Command, args []string) {
+			migrationsManage.RepairVersionData(migrations)
+		},
+	}
+	rootCmd.AddCommand(repairCommand)
 	err := rootCmd.Execute()
 	if err != nil {
 		fmt.Println(err)
