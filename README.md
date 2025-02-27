@@ -70,8 +70,11 @@ Flags:
 Use " [command] --help" for more information about a command.
 
 ```
-###Command line conflict resolution
-If you use 'go run' when running the project` To start, there may be command line conflicts due to two 'funcmain()' appearing in the root directory at the same time. You can resolve this issue by:
+### Command line conflict resolution
+
+If you use 'go run' when running the project` To start, there may be command line conflicts due to two 'funcmain()' appearing in the root directory at the same time. 
+
+You can resolve this issue by:
 ```shell
 //When a conflict occurs, you can directly specify the entry file name to run your project, for example:
 //Go run [project entry file. go]
