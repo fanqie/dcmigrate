@@ -2,11 +2,12 @@ package core
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/fanqie/dcmigrate/pkg/utility"
 	"github.com/fatih/color"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/spf13/cobra"
-	"os"
 )
 
 func DefinedCommand(migrationsManage *MigratesManage, migrations map[string]DcMigrateImpl) {

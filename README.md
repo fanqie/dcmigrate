@@ -31,11 +31,10 @@ go get -u github.com/fanqie/dcmigrate
 This is the directory structure you obtained after initializing the project
 ```shell
 example/
-├── dmc.go // This is the command-line tool for dcmigration
 ├── dc_migrations // This is the migration file directory for dcmigration
   └── register.go // This is the migration file registration file for dcmigration, which is automatically generated and maintained by dcmigration. Please do not manually modify it
   └── 20230301_000000_create_users_table.go // This is the migration file for dcmigration
-  
+  └── dmc.go // This is the command-line tool for dcmigration
 ├── go.mod
 ├── go.sum
 └── ... you project files
@@ -44,7 +43,7 @@ example/
 ## Command line usage
 **You must complete the initialization operation**
 ```shell
-go run .\dmc.go --help
+go run . dmc --help
 ```
 ```shell
 [Info]check dc_migrations table
@@ -70,21 +69,9 @@ Flags:
 Use " [command] --help" for more information about a command.
 
 ```
-### Command line conflict resolution
 
-If you use 'go run' when running the project` To start, there may be command line conflicts due to two 'funcmain()' appearing in the root directory at the same time. 
-
-You can resolve this issue by:
-```shell
-//When a conflict occurs, you can directly specify the entry file name to run your project, for example:
-//Go run [project entry file. go]
-go run main.go
-// go run app.go
-// go run entry.go
-// ...
-```
 ## Connect to Database
-Open the "dmc. go" file, modify the database connection information, and then run the dmc. go file. You can configure the database connection according to the reference code and the official Gorm documentation
+Open the "dc_migrations/dmc.go" file, modify the database connection information, and then run the dmc. go file. You can configure the database connection according to the reference code and the official Gorm documentation
 
 **[Gorm Connecting Database Doc Guide](https://gorm.io/docs/connecting_to_the_database.html)**
 ```shell
@@ -99,7 +86,15 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-func main() {
+func TryStartUpDcMigrate() bool {
+	if os.Args[1] != "dmc" {
+		return false
+	}
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Printf("dcmigrate error, %v", err)
+		}
+	}()
 	dcMigrate := pkg.NewDcMigrate(true)
 	dc_migrations.Register(dcMigrate)
 	dcMigrate.Setup(core.GromParams{
@@ -116,7 +111,7 @@ func main() {
 	}, func() {
 
 	})
-
+	return true
 }
 
 // connecting_to_the_database more doc:  https://gorm.io/docs/connecting_to_the_database.html
@@ -165,10 +160,22 @@ func mysqlDialector() gorm.Dialector {
 //}
 
 ```
+## Start Up DcMigrate In Your Project
+```shell
+package main
+import "dc_migrations"
+func main() {
+	if dc_migrations.TryStartUpDcMigrate() {
+		return
+	}
+	//todo: Your code here...
+	// gin.Run()
+}
+```
 ## Generate
 ### Generate a createTable migration file
 ```shell
-go run dmc.go gen --create users
+go run . dmc gen --create users
 ```
 ```shell
 [Info]check dc_migrations table
@@ -181,7 +188,7 @@ go run dmc.go gen --create users
 [Guide Doc](doc/en/Edit_Migration.md)
 ### Generate a alterTable migration file
 ```shell
-go run dmc.go gen --alter users
+go run . dmc gen --alter users
 ```
 ```shell
 # output
@@ -192,7 +199,7 @@ go run dmc.go gen --alter users
 ```
 ## Show Migrations List
 ```shell
-go run dmc.go list
+go run . dmc list
 ```
 ```shell
 [Info]check dc_migrations table
@@ -208,7 +215,7 @@ go run dmc.go list
 ## Run Migration
 ### Migrate All
 ```shell
-go run dmc.go migrate       
+go run . dmc migrate       
 ```
 ```shell
 # output
@@ -223,7 +230,7 @@ go run dmc.go migrate
 ```
 ### Step Migration
 ```shell
-go run dmc.go migrate --step=1
+go run . dmc migrate --step=1
 ```
 ```shell
 # output
@@ -236,7 +243,7 @@ go run dmc.go migrate --step=1
 ```
 ### Rollback Migration
 ```shell
-go run dmc.go rollback --step=1
+go run . dmc rollback --step=1
 ```
 ```shell
 # output
@@ -249,7 +256,7 @@ go run dmc.go rollback --step=1
 ```
 ### Rollback All
 ```shell
-go run dmc.go rollback --all 
+go run . dmc rollback --all 
 ```
 ```shell
 # output  
@@ -269,7 +276,7 @@ go run dmc.go rollback --all
 
 If there are any issues with the status, it needs to be manually modified in the database
 ```shell
-go run dmc.go repair
+go run . dmc repair
 ```
 ```shell
 [Info]check dc_migrations table
@@ -293,13 +300,13 @@ go run dmc.go repair
 ```shell
 $ tree example/
 example/
-├── dmc.go
 ├── go.mod
 ├── go.sum
 └── dc_migrations
     ├── migration_v_2025_02_14_09_48_00_702_create_table_users.go
     ├── migration_v_2025_02_14_09_55_03_505_alter_table_users.go
     └── register.go
+	└── dmc.go
     
 $ cat example/dc_migrations/register.go 
 package dc_migrations

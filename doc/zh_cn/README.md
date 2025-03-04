@@ -34,11 +34,11 @@ go get -u github.com/fanqie/dcmigrate
 
 ```shell
 example/
-├── dmc.go // 这个是dcmigrate 的命令行工具入口
+
 ├── dc_migrations // 迁移文件目录
   └── register.go // 这是dcmigration的迁移文件注册文件，由dcmigration自动生成和维护。请不要手动修改
   └── 20230301_000000_create_users_table.go // 这是dcmigration的迁移文件
-  
+  └── dmc.go // 这个是dcmigrate 的命令行工具入口
 ├── go.mod
 ├── go.sum
 └── ... you project files
@@ -47,7 +47,7 @@ example/
 ## 命令行使用说明
 **您必须完成初始化操作**
 ```shell
-go run .\dmc.go --help
+go run . dmc  --help
 ```
 ```shell
 [Info]check dc_migrations table
@@ -73,19 +73,10 @@ go run .\dmc.go --help
 使用 " [命令] --help" 查看有关某个命令的更多信息。
 
 ```
-### 命令行冲突解决
-如果您在运行项目时，采用`go run . `来启动，可能会出现命令行冲突,这是因为根目录同时出现了两个`func main()`，您可以通过以下方式解决：
-```shell
-//当发生冲突时，您可以直接指定入口文件名称来运行您的项目，例如：
-//go run [工程入口文件.go]
-go run main.go
-// go run app.go
-// go run entry.go
-// ...
-```
+
 ## 如何链接数据库
 
-打开“dmc.go”文件，修改数据库连接信息，然后运行dmc。去文件。您可以根据参考代码和Gorm官方文档配置数据库连接
+打开“dc_migrations/dmc.go”文件，修改数据库连接信息，然后运行dmc。去文件。您可以根据参考代码和Gorm官方文档配置数据库连接
 
 **[Gorm连接数据库文档指南](https://gorm.io/docs/connecting_to_the_database.html)**
 
@@ -101,7 +92,15 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-func main() {
+func TryStartUpDcMigrate() bool {
+	if os.Args[1] != "dmc" {
+		return false
+	}
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Printf("dcmigrate error, %v", err)
+		}
+	}()
 	dcMigrate := pkg.NewDcMigrate(true)
 	dc_migrations.Register(dcMigrate)
 	dcMigrate.Setup(core.GromParams{
@@ -118,7 +117,7 @@ func main() {
 	}, func() {
 
 	})
-
+	return true
 }
 
 // Gorm连接数据库文档指南 doc:  https://gorm.io/docs/connecting_to_the_database.html
@@ -167,13 +166,25 @@ func mysqlDialector() gorm.Dialector {
 //}
 
 ```
+## 在你的项目中使用dcmigrate
 
+```shell
+package main
+import "dc_migrations"
+func main() {
+	if dc_migrations.TryStartUpDcMigrate() {
+		return
+	}
+	//todo: 你的代码在这里...
+	// 如：gin.Run()
+}
+```
 ## 生成
 
 ### 生成createTable迁移文件
 
 ```shell
-go run dmc.go gen --create users
+go run . dmc gen --create users
 ```
 
 ```shell
@@ -191,7 +202,7 @@ go run dmc.go gen --create users
 ### 生成alterTable迁移文件
 
 ```shell
-go run dmc.go gen --alter users
+go run . dmc gen --alter users
 ```
 
 ```shell
@@ -205,7 +216,7 @@ go run dmc.go gen --alter users
 ## 显示迁移列表
 
 ```shell
-go run dmc.go list
+go run . dmc list
 ```
 
 ```shell
@@ -224,7 +235,7 @@ go run dmc.go list
 ### 全部迁移
 
 ```shell
-go run dmc.go migrate       
+go run . dmc migrate       
 ```
 
 ```shell
@@ -242,7 +253,7 @@ go run dmc.go migrate
 ### 步进执行迁移
 
 ```shell
-go run dmc.go migrate --step=1
+go run . dmc migrate --step=1
 ```
 
 ```shell
@@ -258,7 +269,7 @@ go run dmc.go migrate --step=1
 ### 回滚迁移
 
 ```shell
-go run dmc.go rollback --step=1
+go run . dmc rollback --step=1
 ```
 
 ```shell
@@ -274,7 +285,7 @@ go run dmc.go rollback --step=1
 ### 回滚所有迁移
 
 ```shell
-go run dmc.go rollback --all 
+go run . dmc rollback --all 
 ```
 
 ```shell
@@ -297,7 +308,7 @@ go run dmc.go rollback --all
 如果状态有任何问题，则需要在数据库中手动修改
 
 ```shell
-go run dmc.go repair
+go run . dmc repair
 ```
 ```shell
 [Info]check dc_migrations table
@@ -325,13 +336,13 @@ go run dmc.go repair
 ```shell
 $ tree example/
 example/
-├── dmc.go
 ├── go.mod
 ├── go.sum
 └── dc_migrations
     ├── migration_v_2025_02_14_09_48_00_702_create_table_users.go
     ├── migration_v_2025_02_14_09_55_03_505_alter_table_users.go
     └── register.go
+    └── dmc.go
     
 $ cat example/dc_migrations/register.go 
 package dc_migrations

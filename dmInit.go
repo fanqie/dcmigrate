@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/fanqie/dcmigrate/pkg/utility"
 	"os"
 	"path/filepath"
+
+	"github.com/fanqie/dcmigrate/pkg/utility"
 )
 
 func main() {
@@ -24,7 +25,7 @@ func main() {
 	if err := checkAndCreateFile(registerPath, registerContent()); err != nil {
 		utility.ErrPrintf("create register.go fail:", err)
 	}
-	dmcPath := "dmc.go"
+	dmcPath := filepath.Join("dc_migrations", "dmc.go")
 	if err := checkAndCreateFile(dmcPath, dmcContent()); err != nil {
 		utility.ErrPrintf("create dmc.go fail:", err)
 	}
@@ -51,9 +52,12 @@ func checkAndCreateFile(path, content string) error {
 }
 
 func dmcContent() string {
-	return `package main
+	return `package dc_migrations
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/fanqie/dcmigrate/pkg"
 	"github.com/fanqie/dcmigrate/pkg/core"
 	"gorm.io/driver/mysql"
@@ -61,9 +65,17 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-func main() {
+func TryStartUpDcMigrate() bool {
+	if os.Args[1] != "dmc" {
+		return false
+	}
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Printf("dcmigrate error, %v", err)
+		}
+	}()
 	dcMigrate := pkg.NewDcMigrate(true)
-	dc_migrations.Register(dcMigrate)
+	Register(dcMigrate)
 	dcMigrate.Setup(core.GromParams{
 		Dialector: mysqlDialector(),
 		// or ↓↓↓↓↓↓↓↓↓↓
@@ -79,7 +91,7 @@ func main() {
 	}, func() {
 
 	})
-
+	return true
 }
 
 // connecting_to_the_database more doc:  https://gorm.io/docs/connecting_to_the_database.html

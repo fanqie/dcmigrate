@@ -2,6 +2,8 @@ package pkg
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/fanqie/dcmigrate/pkg/core"
 )
 
@@ -35,6 +37,7 @@ func (r *DcMigrate) Setup(db core.GromParams, afterHandle func()) {
 	}
 	r.MigrationsManage = core.NewMigratesManage()
 	r.MigrationsManage.CheckTable(r.migrations)
+	os.Args = os.Args[1:]
 	core.DefinedCommand(r.MigrationsManage, r.migrations)
 	afterHandle()
 
