@@ -12,10 +12,9 @@ Dcmigrate is a database migration tool based on Gorm, which complements the Gorm
 - Explicit "up" and "down" function implementation
 - Supports repairing migration records
 
-# Warning ⚠️
+# Tooltip ⚠
 
-- The current version is still gradually iterating, please ensure continuous feature upgrades**
-
+- **The current version is relatively stable and will continue to be updated. It is recommended to keep it until the version is updated**
 
 
 # Quick start
@@ -75,10 +74,12 @@ Open the "dc_migrations/dmc.go" file, modify the database connection information
 
 **[Gorm Connecting Database Doc Guide](https://gorm.io/docs/connecting_to_the_database.html)**
 ```shell
-package main
+package dc_migrations
 
 import (
-	"github.com/fanqie/dcmigrate-example/dc_migrations"
+	"fmt"
+	"os"
+
 	"github.com/fanqie/dcmigrate/pkg"
 	"github.com/fanqie/dcmigrate/pkg/core"
 	"gorm.io/driver/mysql"
@@ -96,7 +97,7 @@ func TryStartUpDcMigrate() bool {
 		}
 	}()
 	dcMigrate := pkg.NewDcMigrate(true)
-	dc_migrations.Register(dcMigrate)
+	Register(dcMigrate)
 	dcMigrate.Setup(core.GromParams{
 		Dialector: mysqlDialector(),
 		// or ↓↓↓↓↓↓↓↓↓↓

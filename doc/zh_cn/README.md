@@ -12,9 +12,9 @@ dcmigrate是一个基于gorm的数据库迁移工具， 与gorm migrate机制为
 - 显式的“up”、“down” 函数实现
 - 支持修复迁移记录
 
-# Warning⚠️
+# Tooltip ⚠
 
-- **目前版本还在逐步迭代中，请确保持续功能升级！！！**
+- **目前版本较稳定，还会继续更新，建议保持到版本更新**
 
 # 快速开始
 
@@ -81,10 +81,12 @@ go run . dmc  --help
 **[Gorm连接数据库文档指南](https://gorm.io/docs/connecting_to_the_database.html)**
 
 ```shell
-package main
+package dc_migrations
 
 import (
-	"github.com/fanqie/dcmigrate-example/dc_migrations"
+	"fmt"
+	"os"
+
 	"github.com/fanqie/dcmigrate/pkg"
 	"github.com/fanqie/dcmigrate/pkg/core"
 	"gorm.io/driver/mysql"
@@ -102,7 +104,7 @@ func TryStartUpDcMigrate() bool {
 		}
 	}()
 	dcMigrate := pkg.NewDcMigrate(true)
-	dc_migrations.Register(dcMigrate)
+	Register(dcMigrate)
 	dcMigrate.Setup(core.GromParams{
 		Dialector: mysqlDialector(),
 		// or ↓↓↓↓↓↓↓↓↓↓
