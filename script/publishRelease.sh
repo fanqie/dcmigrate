@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="v1.0.0"
+VERSION="v1.0.1"
 OUTPUT_FILE="./.github/workflows/release.yml"
 
 if [ -f "$OUTPUT_FILE" ]; then

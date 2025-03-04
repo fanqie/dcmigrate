@@ -66,7 +66,7 @@ import (
 )
 
 func TryStartUpDcMigrate() bool {
-	if os.Args[1] != "dmc" {
+	if len(os.Args) <= 1 || os.Args[1] != "dmc" {
 		return false
 	}
 	defer func() {

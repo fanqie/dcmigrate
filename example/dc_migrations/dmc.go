@@ -12,7 +12,7 @@ import (
 )
 
 func TryStartUpDcMigrate() bool {
-	if os.Args[1] != "dmc" {
+	if len(os.Args) <= 1 || os.Args[1] != "dmc" {
 		return false
 	}
 	defer func() {
@@ -84,3 +84,5 @@ func mysqlDialector() gorm.Dialector {
 //	dsn := "tcp://localhost:9000?database=gorm&username=gorm&password=gorm&read_timeout=10&write_timeout=20"
 //	return clickhouse.Open(dsn)
 //}
+
+
